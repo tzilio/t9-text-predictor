@@ -3,7 +3,6 @@
 #include <string.h>
 #include "trie.h"
 
-// Função para traduzir uma palavra em uma sequência T9
 void translateToT9(const char *word, char *sequence) {
     const char *map = "22233344455566677778889999";
     for (int i = 0; word[i] != '\0'; i++) {
@@ -17,7 +16,6 @@ void translateToT9(const char *word, char *sequence) {
     sequence[strlen(word)] = '\0';
 }
 
-// Carrega o dicionário e constrói a trie
 void loadDictionary(TrieNode *root, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (!file) {
@@ -46,9 +44,8 @@ int main(int argc, char *argv[]) {
     int skip_count = 0;
 
     while (scanf("%50s", input) == 1) {
-        if (strcmp(input, "0") == 0) break; // Termina o programa
+        if (strcmp(input, "0") == 0) break;
 
-        // Verifica se a entrada é válida (contém apenas dígitos de 2-9 ou '#')
         int length = strlen(input);
         int is_valid = 1;
         for (int i = 0; i < length; i++) {
@@ -60,22 +57,19 @@ int main(int argc, char *argv[]) {
 
         if (!is_valid) {
             printf("entrada invalida\n");
-            continue; // Ignora essa entrada e passa para a próxima
+            continue;
         }
 
-        // Conta o número de '#' no final da sequência e separa a sequência numérica
         skip_count = 0;
         while (length > 0 && input[length - 1] == '#') {
             skip_count++;
-            input[--length] = '\0';  // Remove o '#' do final da sequência
+            input[--length] = '\0';
         }
 
-        // Se a sequência numérica é válida, atualiza `last_sequence`
         if (length > 0) {
-            strcpy(last_sequence, input); // Armazena a sequência atual sem '#'
+            strcpy(last_sequence, input);
         }
 
-        // Realiza a busca usando a sequência armazenada e o número de `#` encontrados
         char *result = searchWord(root, last_sequence, skip_count);
         if (result) {
             printf("%s\n", result);
