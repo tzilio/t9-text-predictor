@@ -37,7 +37,7 @@ Isso irá compilar os arquivos `t9.c` e `trie.c`, gerando o executável `t9`.
 Para executar o programa, utilize o comando abaixo, onde `dicionario.txt` é o arquivo de dicionário e `consulta.txt` é o arquivo de consultas:
 
 ```bash
-./t9 dicionario.txt consulta.txt > saida.txt
+./t9 dicionario.txt < consulta.txt > saida.txt
 ```
 
 Esse comando direciona a saída do programa para o arquivo `saida.txt`.
@@ -103,5 +103,11 @@ Com `dicionario.txt` e `consulta.txt` preenchidos conforme os exemplos acima, ex
 
 ## Autor
 
-Este projeto foi desenvolvido como parte de um exercício prático para o curso de Algoritmos e Estruturas de Dados III.
+Este projeto foi desenvolvido por:
+
+Eduardo Faria Kruger e 
+Thiago Zilio Assunção;
+
+como parte de um exercício prático para o curso de Algoritmos e Estruturas de Dados III. CI1057 - UFPR.
+
 
