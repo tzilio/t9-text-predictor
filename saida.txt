@@ -1,10 +1,7 @@
-rocks
-socks
-jello
+paw
+pax
+pay
+raw
 palavra nao encontrada
-socks
 palavra nao encontrada
-sock
-pock
-entrada invalida
-entrada invalida
+palavra nao encontrada

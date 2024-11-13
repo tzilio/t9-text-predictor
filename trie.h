@@ -10,8 +10,8 @@ typedef struct TrieNode {
 } TrieNode;
 
 TrieNode *createTrieNode();
-void insertWord(TrieNode *root, const char *word, const char *numeric_sequence);
-char *searchWord(TrieNode *root, const char *numeric_sequence, int skip_count);
+void insertWord(TrieNode *root, const char *word, const char *numeric);
+char* searchWord(TrieNode *root, const char *numeric, int occurrence);
 void freeTrie(TrieNode *root);
 
 #endif

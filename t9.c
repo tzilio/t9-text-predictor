@@ -25,6 +25,7 @@ void loadDictionary(TrieNode *root, const char *filename) {
     char word[51], sequence[51];
     while (fscanf(file, "%50s", word) == 1) {
         translateToT9(word, sequence);
+        //printf("%s\n", sequence);
         insertWord(root, word, sequence);
     }
     fclose(file);
