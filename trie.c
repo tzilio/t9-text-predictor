@@ -3,7 +3,6 @@
 #include <string.h>
 #include "trie.h"
 
-
 TrieNode *createTrieNode() {
     TrieNode *node = (TrieNode *)malloc(sizeof(TrieNode));
     if (node) {
@@ -16,22 +15,21 @@ TrieNode *createTrieNode() {
     return node;
 }
 
-// Inserir palavra usando seq numérica
+
 void insertWord(TrieNode *root, const char *word, const char *numeric_sequence) {
     TrieNode *current = root;
     int length = strlen(numeric_sequence);
 
     for (int i = 0; i < length; i++) {
-        int index = numeric_sequence[i] - '0'; // Converte caractere para índice numérico
+        int index = numeric_sequence[i] - '0'; /* gera o indice para saber qual no acessar para seguir percorrendo a arvore*/
         if (!current->children[index]) {
             current->children[index] = createTrieNode();
         }
         current = current->children[index];
     }
 
-    // verifica se há conflito de sequencia
+    /* checa se o nodo ja esta ocupado por outra palavra, nesse caso inicia uma lista ligada no indice 9 (#)  */
     while (current->word) {
-        // se existe, cria um novo nó no índice 9 ('#')
         if (!current->children[9]) {
             current->children[9] = createTrieNode();
         }
@@ -42,35 +40,35 @@ void insertWord(TrieNode *root, const char *word, const char *numeric_sequence) 
     //printf("Palavra inserida: %s com sequência %s\n", word, numeric_sequence); TESTE
 }
 
-// buscar palavra pela seq numérica ou "pular" palavras na lista
 char *searchWord(TrieNode *root, const char *numeric_sequence, int skip_count) {
     TrieNode *current = root;
     int length = strlen(numeric_sequence);
 
+    /* percorre a arvore descendo nos niveis ate o fim do tamanho da string da sequencia numerica */
     for (int i = 0; i < length; i++) {
         if (numeric_sequence[i] == '#') {
             continue; // ignora "#"
         }
         
-        int index = numeric_sequence[i] - '0';
+        int index = numeric_sequence[i] - '0'; /* converte o texto para indice inteiro usado para saber qual nodo acessar para continuar percorrendo a arvore */
         if (index < 2 || index > 9 || !current->children[index]) {
             //printf("Sequência %s não encontrada no nível %d\n", numeric_sequence, i);  // TESTE
-            return NULL;
+            return NULL; /* retorna null em caso de entrada invalida */
         }
         current = current->children[index];
     }
 
+    /* chega no final da sequencia numerica e comeca a iterar pela quantidade de pulos na lista ligada */
     for (int i = 0; i < skip_count && current; i++) {
         if (!current->children[9]) {
             //printf("Sem mais alternativas para %s após %d pulos\n", numeric_sequence, i);  // TESTE
-            return NULL;
+            return NULL; /* retorna nulo quando tenta acessar uma posicao nula de memoria */
         }
         current = current->children[9];
     }
 
+    /* checa se o nodo e a palavra existem antes de acessar essa posicao de memoria e retorna o valor */
     if (current && current->word) {
-        //printf("Palavra encontrada: %s com sequência %s e pulos %d\n", current->word, numeric_sequence, skip_count);  // TESTE
-        //printf("%s", current->word);
         return current->word;
     } else {
         printf("palavra nao encontrada");
@@ -80,6 +78,7 @@ char *searchWord(TrieNode *root, const char *numeric_sequence, int skip_count) {
 }
 
 
+/* percorre e libera recursivamente a memoria alocara na arvore Trie */
 void freeTrie(TrieNode *root) {
     if (!root) return;
 
