@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
         }
         
         /* busca e impressao da palavrea na arvore */
-        char *result = searchWord(root, last_sequence, skip_count);
+        char *result = searchWord(root, last_sequence, skip_count + 1);
         if (result) {
             printf("%s\n", result);
         } else {
