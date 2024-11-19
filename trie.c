@@ -1,11 +1,8 @@
-// trie.c
-
 #include "trie.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// Função para criar um novo nó da trie
 TrieNode* createTrieNode() {
     TrieNode *node = (TrieNode*) malloc(sizeof(TrieNode));
     if (!node) {
@@ -20,11 +17,10 @@ TrieNode* createTrieNode() {
     return node;
 }
 
-// Função para inserir uma palavra na trie
 void insertWord(TrieNode *root, const char *word, const char *numeric) {
     TrieNode *current = root;
     for (int i = 0; numeric[i] != '\0'; i++) {
-        int digit = numeric[i] - '0';
+        int digit = numeric[i] - '0';   /* gera o indice para saber qual no acessar para seguir percorrendo a arvore*/
         if (digit < 0 || digit > 9) {
             fprintf(stderr, "Sequência numérica inválida: %s\n", numeric);
             return;
@@ -34,7 +30,8 @@ void insertWord(TrieNode *root, const char *word, const char *numeric) {
         }
         current = current->children[digit];
     }
-    // Verifica se já existe uma palavra armazenada neste nó
+    
+    /* checa se o nodo ja esta ocupado por outra palavra, nesse caso inicia uma lista ligada */
     if (current->word == NULL) {
         current->word = strdup(word);
         if (!current->word) {
@@ -42,7 +39,6 @@ void insertWord(TrieNode *root, const char *word, const char *numeric) {
             exit(EXIT_FAILURE);
         }
     } else {
-        // Adiciona a nova palavra na lista encadeada usando 'next'
         TrieNode *temp = current;
         while (temp->next != NULL) {
             temp = temp->next;
@@ -56,11 +52,10 @@ void insertWord(TrieNode *root, const char *word, const char *numeric) {
     }
 }
 
-// Função para buscar uma palavra na trie com base na sequência numérica e na ocorrência de '#'
 char* searchWord(TrieNode *root, const char *numeric, int occurrence) {
     TrieNode *current = root;
     for (int i = 0; numeric[i] != '\0'; i++) {
-        int digit = numeric[i] - '0';
+        int digit = numeric[i] - '0';  /* converte o texto para indice inteiro usado para saber qual nodo acessar para continuar percorrendo a arvore */
         if (digit < 0 || digit > 9) {
             return NULL;
         }
@@ -80,14 +75,27 @@ char* searchWord(TrieNode *root, const char *numeric, int occurrence) {
     return NULL;
 }
 
-// Função para liberar a memória da trie
 void freeTrie(TrieNode *root) {
     if (root == NULL) return;
+
     for (int i = 0; i < 10; i++) {
         freeTrie(root->children[i]);
     }
+
+    // Libera a lista encadeada associada ao nó atual
+    TrieNode *current = root->next;
+    while (current != NULL) {
+        TrieNode *temp = current;
+        current = current->next;
+        if (temp->word) {
+            free(temp->word);
+        }
+        free(temp);
+    }
+
     if (root->word) {
         free(root->word);
     }
+
     free(root);
 }
