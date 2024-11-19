@@ -17,7 +17,7 @@ teste: $(TARGET)
 	./$(TARGET) mini_dicionario.txt < teste.txt > saida.txt
 
 valgrind: $(TARGET)
-	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) mini_dicionario.txt < teste.txt > saida_valgrind.txt
+	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) dicionario_exemplo.txt < teste.txt > saida_valgrind.txt
 
 clean:
 	rm -f *.o $(TARGET)
