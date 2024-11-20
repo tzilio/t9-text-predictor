@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+/* Cria e inicializa uma arvore Trie */
 TrieNode* createTrieNode() {
     TrieNode *node = malloc(sizeof(TrieNode));
     if (!node) {
@@ -16,7 +18,7 @@ TrieNode* createTrieNode() {
     return node;
 }
 
-// obter o índice correspondente ao caractere
+/* funcao que obtem o indice de um caracter para mapeamento */
 int getIndex(char c) {
     if (c >= '2' && c <= '9') {
         return c - '2'; 
@@ -27,6 +29,7 @@ int getIndex(char c) {
     }
 }
 
+/* insere uma palavra em uma trie com base na sua codificacao numerica para o percurso na arvore*/
 void insertWord(TrieNode *root, const char *word, const char *numeric) {
     TrieNode *current = root;
 
@@ -50,7 +53,7 @@ void insertWord(TrieNode *root, const char *word, const char *numeric) {
             exit(EXIT_FAILURE);
         }
     } else {
-        // Encadeamento usando índice para '#'
+        /* insere na lista ligada # */
         if (current->children[8] == NULL) {
             current->children[8] = createTrieNode();
             current->children[8]->word = strdup(word);
@@ -73,6 +76,8 @@ void insertWord(TrieNode *root, const char *word, const char *numeric) {
     }
 }
 
+
+/* busca uma palavra em uma arvore trie com base na sua codificacao numerica */
 char* searchWord(TrieNode *root, const char *numeric, int occurrence) {
     TrieNode *current = root;
 
@@ -103,6 +108,8 @@ char* searchWord(TrieNode *root, const char *numeric, int occurrence) {
     return NULL;
 }
 
+
+/* libera recursivamente a memoria de uma arvore trie */
 void freeTrie(TrieNode *node) {
     if (node == NULL) return;
 

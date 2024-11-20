@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
             strcpy(last_sequence, input);
         }
         
-        /* busca e impressao da palavrea na arvore */
+        /* busca e impressao da palavra na arvore */
         char *result = searchWord(root, last_sequence, skip_count + 1);
         if (result) {
             printf("%s\n", result);
